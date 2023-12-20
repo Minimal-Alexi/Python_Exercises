@@ -1,0 +1,102 @@
+#1
+class Car:
+    def __init__(self,registration_number,max_speed):
+        self.reg_numb = registration_number
+        self.max_speed = max_speed
+        self.current_speed = 0
+        self.distance = 0
+
+number = input("Please enter your car number. ")
+max_speed = int(input("Please enter your cars maximum speed. "))
+Car = Car(number,max_speed)
+print(f"Car number is: {Car.reg_numb}\n"
+      f"Its maximum speed is: {Car.max_speed}\n"
+      f"Its current speed is: {Car.current_speed}\n"
+      f"It has travelled {Car.distance} kms so far.")
+#2
+class Car:
+    def __init__(self,registration_number,max_speed):
+        self.reg_numb = registration_number
+        self.max_speed = max_speed
+        self.current_speed = 0
+        self.distance = 0
+    def accelerate(self,change_speed):
+        if(self.current_speed + change_speed <= 0 or self.current_speed + change_speed > self.max_speed):
+            return False
+        self.current_speed = self.current_speed + change_speed
+
+
+number = input("Please enter your car number. ")
+max_speed = int(input("Please enter your cars maximum speed. "))
+Car = Car(number,max_speed)
+while True:
+    print(f"Car number is: {Car.reg_numb}\n"
+      f"Its maximum speed is: {Car.max_speed}\n"
+      f"Its current speed is: {Car.current_speed}\n"
+      f"It has travelled {Car.distance} kms so far.")
+    acceleration = input("Insert new acceleration (or STOP):")
+    if acceleration == "STOP":
+        break
+    else:
+        acceleration = int(acceleration)
+    Car.accelerate(acceleration)
+print(f"Car number is: {Car.reg_numb}\n"
+      f"Its maximum speed is: {Car.max_speed}\n"
+      f"Its current speed is: {Car.current_speed}\n"
+      f"It has travelled {Car.distance} kms so far.")
+
+#3
+class Car:
+    def __init__(self,registration_number,max_speed):
+        self.reg_numb = registration_number
+        self.max_speed = max_speed
+        self.current_speed = 0
+        self.distance = 0
+    def accelerate(self,change_speed):
+        if(self.current_speed + change_speed <= 0 or self.current_speed + change_speed > self.max_speed):
+            return False
+        self.current_speed = self.current_speed + change_speed
+    def drive(self,time):
+        self.distance = self.distance + self.current_speed * time
+
+number = input("Please enter your car number. ")
+max_speed = int(input("Please enter your cars maximum speed. "))
+Car = Car(number,max_speed)
+Car.current_speed = 60
+Car.distance = 2000
+time = float(input("Please enter for how long you're gonna drive. "))
+Car.drive(time)
+print(f"Car number is: {Car.reg_numb}\n"
+      f"Its maximum speed is: {Car.max_speed}\n"
+      f"Its current speed is: {Car.current_speed}\n"
+      f"It has travelled {Car.distance} kms so far.")
+
+#4
+from random import randint
+class Car:
+    def __init__(self,registration_number,max_speed):
+        self.reg_numb = registration_number
+        self.max_speed = max_speed
+        self.current_speed = 0
+        self.distance = 0
+    def accelerate(self,change_speed):
+        if(self.current_speed + change_speed <= 0 or self.current_speed + change_speed > self.max_speed):
+            return False
+        self.current_speed = self.current_speed + change_speed
+    def drive(self,time):
+        self.distance = self.distance + self.current_speed * time
+participants = list()
+for i in range(1,11,1):
+    participants.append(Car(f"ABC{i}",randint(100,200)))
+win = False
+while win == False:
+    for car in participants:
+        car.drive(1)
+        car.accelerate(randint(-10,15))
+        if car.distance>= 10000:
+            win = True
+for car in participants:
+    print(f"Car number is: {car.reg_numb}\n"
+          f"Its maximum speed is: {car.max_speed}\n"
+          f"Its current speed is: {car.current_speed}\n"
+          f"It has travelled {car.distance} kms so far.")

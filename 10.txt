@@ -1,0 +1,192 @@
+#1
+class Elevator:
+        def __init__(self):
+            self.current_floor = 0
+        def floor_up(self):
+            self.current_floor = self.current_floor + 1
+        def floor_down(self):
+            self.current_floor = self.current_floor - 1
+        def go_to_floor(self,destination):
+            while self.current_floor!=destination:
+                if self.current_floor<destination:
+                    self.floor_up()
+                else:
+                    self.floor_down()
+            print(f"You are currently at floor {self.current_floor}")
+
+h = Elevator()
+print(f"You are currently at floor {h.current_floor}")
+while True:
+    usinput = input("What floor would you like to go to? (H to stop)")
+    if usinput == "H":
+        break
+    else:
+        usinput = int(usinput)
+    h.go_to_floor(usinput)
+
+
+#2
+class Elevator:
+    def __init__(self,bottom_floor):
+        self.current_floor = bottom_floor
+
+    def floor_up(self):
+        self.current_floor = self.current_floor + 1
+
+    def floor_down(self):
+        self.current_floor = self.current_floor - 1
+
+    def go_to_floor(self, destination):
+        while self.current_floor != destination:
+            if self.current_floor < destination:
+                self.floor_up()
+            else:
+                self.floor_down()
+        print(f"You are currently at floor {self.current_floor}")
+
+
+class Building:
+    def __init__(self, bottom, top, total_elev):
+        self.bottom_floor = bottom
+        self.top_floor = top
+        self.total_elevators = total_elev
+        self.elevator_list = list()
+        for i in range(0,total_elev,1):
+            self.elevator_list.append(Elevator(bottom))
+    def run_elevator(self,elevator_number,destination):
+        if  destination>self.top_floor:
+            return (False,1)
+        elif destination<self.bottom_floor:
+            return (False,2)
+        self.elevator_list[elevator_number-1].go_to_floor(destination)
+
+bottom = int(input("What is the bottom floor of your building?"))
+top = int(input("What is the top floor of your building?"))
+total_elev = int(input("What is the total number of elevators?"))
+building = Building(bottom,top,total_elev)
+while True:
+    print(f"The building has {building.total_elevators} elevators.")
+    us_input_lift = input("Which elevator would you like to pick? (H to stop) ")
+    if us_input_lift == "H":
+        break
+    else:
+        us_input_lift = int(us_input_lift)
+    us_input_dest = input(f"Which floor would you like to go to? You are currently at floor {building.elevator_list[us_input_lift-1].current_floor}. (H to stop) ")
+    if us_input_dest == "H":
+        break
+    else:
+        us_input_dest = int(us_input_dest)
+    if building.run_elevator(us_input_lift,us_input_dest) == (False,1):
+        print("Destination is above current building max height, please retry.")
+    elif building.run_elevator(us_input_lift,us_input_dest) == (False,2):
+        print("Destination is below current building max depth, please retry.")
+
+#3
+class Elevator:
+    def __init__(self,bottom_floor):
+        self.current_floor = bottom_floor
+
+    def floor_up(self):
+        self.current_floor = self.current_floor + 1
+
+    def floor_down(self):
+        self.current_floor = self.current_floor - 1
+
+    def go_to_floor(self, destination):
+        while self.current_floor != destination:
+            if self.current_floor < destination:
+                self.floor_up()
+            else:
+                self.floor_down()
+        print(f"You are currently at floor {self.current_floor}")
+
+
+class Building:
+    def __init__(self, bottom, top, total_elev):
+        self.bottom_floor = bottom
+        self.top_floor = top
+        self.total_elevators = total_elev
+        self.elevator_list = list()
+        for i in range(0,total_elev,1):
+            self.elevator_list.append(Elevator(bottom))
+    def run_elevator(self,elevator_number,destination):
+        if  destination>self.top_floor:
+            return (False,1)
+        elif destination<self.bottom_floor:
+            return (False,2)
+        self.elevator_list[elevator_number-1].go_to_floor(destination)
+    def fire_alarm(self):
+        print("ALARM,SENDING ALL LIFTS TO THE BOTTOM FLOOR! BRACE FOR IMPACT!")
+        for i in self.elevator_list:
+            i.go_to_floor(self.bottom_floor)
+bottom = int(input("What is the bottom floor of your building?"))
+top = int(input("What is the top floor of your building?"))
+total_elev = int(input("What is the total number of elevators?"))
+building = Building(bottom,top,total_elev)
+while True:
+    print(f"The building has {building.total_elevators} elevators.")
+    us_input_lift = input("Which elevator would you like to pick? (H to stop,E for fire_alarm) ")
+    if us_input_lift == "H":
+        break
+    elif us_input_lift == "E":
+        building.fire_alarm()
+    else:
+        us_input_lift = int(us_input_lift)
+        us_input_dest = input(
+            f"Which floor would you like to go to? You are currently at floor {building.elevator_list[us_input_lift - 1].current_floor}. (H to stop,E for fire_alarm) ")
+        if us_input_dest == "H":
+            break
+        elif us_input_dest == "E":
+            building.fire_alarm()
+        else:
+            us_input_dest = int(us_input_dest)
+            if building.run_elevator(us_input_lift, us_input_dest) == (False, 1):
+                print("Destination is above current building max height, please retry.")
+            elif building.run_elevator(us_input_lift, us_input_dest) == (False, 2):
+                print("Destination is below current building max depth, please retry.")
+
+#4
+from random import randint
+class Car:
+    def __init__(self,registration_number,max_speed):
+        self.reg_numb = registration_number
+        self.max_speed = max_speed
+        self.current_speed = 0
+        self.distance = 0
+    def accelerate(self,change_speed):
+        if(self.current_speed + change_speed <= 0 or self.current_speed + change_speed > self.max_speed):
+            return False
+        self.current_speed = self.current_speed + change_speed
+    def drive(self,time):
+        self.distance = self.distance + self.current_speed * time
+
+class Race:
+    def __init__(self,name,distance):
+        self.name = name
+        self.distance = distance
+        self.participants = list()
+        for i in range(1,11,1):
+            self.participants.append(Car(f"ABC{i}",randint(100,200)))
+    def race_finished(self):
+        for car in self.participants:
+            if car.distance >= self.distance:
+                return True
+    def hour_passes(self):
+        for car in self.participants:
+            car.drive(1)
+            car.accelerate(randint(-10, 15))
+    def print_status(self):
+        print("Name | Spd | M_Spd | Dist")
+        for car in self.participants:
+            print(f"{car.reg_numb} | {car.current_speed} | {car.max_speed} | {car.distance}")
+
+GDR = Race("Grand Demolition Derby",8000)
+i = 1
+while True:
+    GDR.hour_passes()
+    if GDR.race_finished() == True:
+        break
+    if i%10 == 0:
+        GDR.print_status()
+    i = i + 1
+GDR.print_status()
